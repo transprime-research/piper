@@ -8,6 +8,8 @@ class Piper
 {
     private array $piped = [];
 
+    private array $extraParameters = [];
+
     public function pipe($value, callable $callback = null)
     {
         if (!empty($this->piped)) {
@@ -23,9 +25,11 @@ class Piper
         return $this;
     }
 
-    public function to(callable $action)
+    public function to(callable $action, ...$extraParameters)
     {
         $this->piped[] = $action;
+
+        empty($extraParameters) ?: $this->extraParameters[count($this->piped) - 1] = $extraParameters;
 
         return $this;
     }
@@ -47,7 +51,11 @@ class Piper
                 continue;
             }
 
-            $result = $pipe($result);
+            if ($this->extraParameters[$key] ?? false) {
+                $result = $pipe($result, ...$this->extraParameters[$key]);
+            } else {
+                $result = $pipe($result);
+            }
         }
 
         return $action ? $action($result) : $result;

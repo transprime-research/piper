@@ -118,6 +118,26 @@ class PiperTest extends TestCase
             ->to(fn($name) => ucfirst($name)) //Executes the fourth function
             ->up(fn($result) => $this->assertSame('Ade', $result)); //manipulates the result
     }
+
+    public function testAcceptingFunctionAndParametersInToMethod()
+    {
+        $this->assertSame('ADE', piper('ade')->to('strtoupper')->up());
+
+        $this->assertSame(
+            [1],
+            piper(['ade', 1])
+                ->to('array_filter', fn($val) => is_int($val))
+                ->to('array_values')
+                ->up()
+        );
+
+        $this->assertSame(
+            ['ADE'],
+            piper(['ade'])
+                ->to(fn($names, $fn) => $fn(fn($name) => strtoupper($name), $names), 'array_map')
+                ->up()
+        );
+    }
 }
 
 class StrManipulator {
