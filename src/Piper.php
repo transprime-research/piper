@@ -8,7 +8,8 @@ class Piper
 {
     private array $piped = [];
 
-    private array $extraParameters = [];
+    private array $extraParamsTo = [];
+    private array $extraParamsFro = [];
 
     public function __invoke(callable $action = null)
     {
@@ -34,7 +35,23 @@ class Piper
     {
         $this->piped[] = $action;
 
-        empty($extraParameters) ?: $this->extraParameters[count($this->piped) - 1] = $extraParameters;
+        empty($extraParameters) ?: $this->extraParamsTo[count($this->piped) - 1] = $extraParameters;
+
+        return $this;
+    }
+
+    /**
+     * Backward Pipe
+     *
+     * @param callable $action
+     * @param mixed ...$extraParameters
+     * @return $this
+     */
+    public function fro(callable $action, ...$extraParameters)
+    {
+        $this->piped[] = $action;
+
+        empty($extraParameters) ?: $this->extraParamsFro[count($this->piped) - 1] = $extraParameters;
 
         return $this;
     }
@@ -56,9 +73,11 @@ class Piper
                 continue;
             }
 
-            if ($this->extraParameters[$key] ?? false) {
-                $result = $pipe(...$this->extraParameters[$key], ...[$result]);
-            } else {
+            if ($this->extraParamsTo[$key] ?? false) {
+                $result = $pipe(...$this->extraParamsTo[$key], ...[$result]);
+            } elseif ($this->extraParamsFro[$key] ?? false) {
+                $result = $pipe($result, ...$this->extraParamsFro[$key]);
+            } else{
                 $result = $pipe($result);
             }
         }

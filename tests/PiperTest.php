@@ -126,7 +126,7 @@ class PiperTest extends TestCase
         $this->assertSame(
             10,
             piper(['ade', 1])
-                ->to(fn($data) => array_filter($data, static fn($val):bool => is_int($val)))
+                ->fro('array_filter', fn($val) => is_int($val))
                 ->to('array_merge', [2, 3, 4])
                 ->to('array_values')
                 ->to('array_sum')
