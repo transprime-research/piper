@@ -20,7 +20,7 @@ class Piper
         return $this;
     }
 
-    public function up()
+    public function up(\Closure $closure = null)
     {
         if (! isset($this->piped[0])) {
             throw new \Exception('Initial pipe value not available');
@@ -34,6 +34,6 @@ class Piper
             }
         }
 
-        return $initial;
+        return $closure ? $closure($initial) : $initial;
     }
 }
