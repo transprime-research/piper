@@ -8,10 +8,14 @@ class Piper
 {
     private array $piped = [];
 
-    public function pipe($value)
+    public function pipe($value, $callback = null)
     {
         if (!empty($this->piped)) {
             throw new PiperException('pipe() must be called only once');
+        }
+
+        if ($callback instanceof \Closure || is_string($callback)) {
+            $value = $callback($value);
         }
 
         $this->piped[] = $value;

@@ -1,14 +1,17 @@
 <?php
 
+use Piper\Piper;
+
 if (! function_exists('piper')) {
     /**
      * New up a piped value
      *
      * @param $value
-     * @return \Piper\Piper
+     * @param null $callback
+     * @return Piper
      */
-    function piper($value) {
-        return (new \Piper\Piper())
-            ->pipe($value);
+    function piper($value, $callback = null) {
+        return (new Piper())
+            ->pipe($value, $callback);
     }
 }

@@ -77,4 +77,30 @@ class PiperTest extends TestCase
         piper(fn() => 'NAME')
             ->up();
     }
+
+    public function testPipeMethodAcceptsString()
+    {
+        $result = piper('NAME', 'strtolower')
+            ->to(fn($name) => ucfirst($name))
+            ->up();
+
+        $this->assertSame('Name', $result);
+
+        $result2 = piper('NAME', StrManipulator::class.'::strToLower')
+            ->to(fn($name) => ucfirst($name))
+            ->up();
+
+        $this->assertSame('Name', $result2);
+    }
+
+    //tests
+    // accept string as to() value to perform 'array_* method etc
+}
+
+class StrManipulator {
+
+    public static function strToLower(string $value)
+    {
+        return strtolower($value);
+    }
 }
