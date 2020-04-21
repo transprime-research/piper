@@ -2,6 +2,8 @@
 
 namespace Piper;
 
+use Piper\Exceptions\PiperException;
+
 class Piper
 {
     private array $piped = [];
@@ -9,7 +11,7 @@ class Piper
     public function pipe($value)
     {
         if (!empty($this->piped)) {
-            throw new \Exception('pipe() must be called only once');
+            throw new PiperException('pipe() must be called only once');
         }
 
         $this->piped[] = $value;
@@ -27,7 +29,7 @@ class Piper
     public function up(\Closure $closure = null)
     {
         if (count($this->piped) < 2) {
-            throw new \Exception('pipe() must be called and to() at least once');
+            throw new PiperException('pipe() must be called and to() at least once');
         }
 
         $initial = $this->piped[0];

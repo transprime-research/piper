@@ -3,6 +3,7 @@
 namespace Piper\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Piper\Exceptions\PiperException;
 use Piper\Piper;
 
 class PiperTest extends TestCase
@@ -55,5 +56,25 @@ class PiperTest extends TestCase
             ->up();
 
         $this->assertSame('name', $result);
+    }
+
+    public function testPipeMethodCannotBeCalledMoreThanOnce()
+    {
+        $this->expectException(PiperException::class);
+        $this->expectExceptionMessage('pipe() must be called only once');
+
+        piper(fn() => 'NAME')
+            ->pipe('1')
+            ->to(fn($name) => strtolower($name))
+            ->up();
+    }
+
+    public function testPipeAndToMethodMustBeCalledBeforeUp()
+    {
+        $this->expectException(PiperException::class);
+        $this->expectExceptionMessage('pipe() must be called and to() at least once');
+
+        piper(fn() => 'NAME')
+            ->up();
     }
 }
