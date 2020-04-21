@@ -1,0 +1,42 @@
+{
+  "name": "transprime-research/piper",
+  "description": "PHP Pipe method execution with values from chained method executions",
+  "license": "MIT",
+  "keywords": [
+    "Piper",
+    "pipe",
+    "php",
+    "Helpers",
+    "Laravel"
+  ],
+  "homepage": "https://transprime-research.github.io/piper/",
+  "support": {
+    "issues": "https://github.com/transprime-research/piper/issues",
+    "source": "https://github.com/transprime-research/piper/issues"
+  },
+  "authors": [
+    {
+      "name": "Oluwatobi Samuel Omisakin",
+      "email": "omisakin.oluwatobi@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Piper\\": "src"
+    },
+    "files": [
+      "Helpers/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Piper\\Tests\\": "tests/"
+    }
+  }
+}

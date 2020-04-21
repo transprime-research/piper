@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  piper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: piper
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www/html
+    environment:
+      SERVICE_TAGS: dev
+      SERVICE_NAME: piper
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - piper-network
+
+#Docker Networks
+networks:
+  piper-network:
+    driver: bridge
