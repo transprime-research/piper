@@ -78,26 +78,44 @@ class PiperTest extends TestCase
             ->up();
     }
 
-    public function testPipeMethodAcceptsString()
+    public function testPipeMethodAcceptsCallable()
     {
+        // test global method
         $result = piper('NAME', 'strtolower')
             ->to(fn($name) => ucfirst($name))
             ->up();
 
         $this->assertSame('Name', $result);
 
+        // test class method
         $result2 = piper('NAME', StrManipulator::class.'::strToLower')
             ->to(fn($name) => ucfirst($name))
             ->up();
 
         $this->assertSame('Name', $result2);
-    }
 
-    //tests
-    // accept string as to() value to perform 'array_* method etc
+        // test array class and method
+        $result2 = piper('NAME', [StrManipulator::class, 'strToLower'])
+            ->to(fn($name) => ucfirst($name))
+            ->up();
+
+        $this->assertSame('Name', $result2);
+
+        // test class object
+        $result2 = piper('NAME', new StrManipulator())
+            ->to(fn($name) => ucfirst($name))
+            ->up();
+
+        $this->assertSame('Name', $result2);
+    }
 }
 
 class StrManipulator {
+
+    public function __invoke(string $value)
+    {
+        return $this->strToLower($value);
+    }
 
     public static function strToLower(string $value)
     {
