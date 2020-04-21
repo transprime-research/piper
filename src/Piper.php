@@ -57,7 +57,7 @@ class Piper
             }
 
             if ($this->extraParameters[$key] ?? false) {
-                $result = $pipe($result, ...$this->extraParameters[$key]);
+                $result = $pipe(...$this->extraParameters[$key], ...[$result]);
             } else {
                 $result = $pipe($result);
             }
