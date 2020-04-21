@@ -47,4 +47,13 @@ class PiperTest extends TestCase
 
         $this->assertSame(['Name'], $result);
     }
+
+    public function testPiperAcceptsClosure()
+    {
+        $result = piper(fn() => 'NAME')
+            ->to(fn($name) => strtolower($name))
+            ->up();
+
+        $this->assertSame('name', $result);
+    }
 }

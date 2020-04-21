@@ -8,6 +8,10 @@ class Piper
 
     public function pipe($value)
     {
+        if (!empty($this->piped)) {
+            throw new \Exception('pipe() must be called only once');
+        }
+
         $this->piped[] = $value;
 
         return $this;
@@ -22,13 +26,21 @@ class Piper
 
     public function up(\Closure $closure = null)
     {
-        if (! isset($this->piped[0])) {
-            throw new \Exception('Initial pipe value not available');
+        if (count($this->piped) < 2) {
+            throw new \Exception('pipe() must be called and to() at least once');
         }
 
         $initial = $this->piped[0];
 
-        foreach ($this->piped as $pipe) {
+        if ($initial instanceof \Closure) {
+            $initial = $initial();
+        }
+
+        foreach ($this->piped as $key => $pipe) {
+            if ($key < 1) {
+                continue;
+            }
+
             if($pipe instanceof \Closure) {
                 $initial = $pipe($initial);
             }
