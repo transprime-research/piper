@@ -2,7 +2,8 @@
 PHP Pipe function execution with values from initial call like F#
 > Pipe Like a PRO :ok:
 
-##Usage
+## Quick Usage
+
 ```php
 piper(['ade','tobi'])
     ->to('array_flip')
