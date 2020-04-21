@@ -138,6 +138,14 @@ class PiperTest extends TestCase
                 ->up()
         );
     }
+
+    public function testMakePiperInvokableWithoutCallingUpMethod()
+    {
+        $result = piper('name')
+            ->to(fn($name) => ucfirst($name))();
+
+        $this->assertSame('Name', $result);
+    }
 }
 
 class StrManipulator {

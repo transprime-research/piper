@@ -10,6 +10,11 @@ class Piper
 
     private array $extraParameters = [];
 
+    public function __invoke(callable $action = null)
+    {
+        return $this->up($action);
+    }
+
     public function pipe($value, callable $callback = null)
     {
         if (!empty($this->piped)) {
