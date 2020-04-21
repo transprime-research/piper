@@ -108,6 +108,16 @@ class PiperTest extends TestCase
 
         $this->assertSame('Name', $result2);
     }
+
+    public function testFunctionCanBeRetrievedAtTheNextPipe()
+    {
+        piper(fn() => fn() => fn() => fn() => 'ade')
+            ->to(fn($fn) => $fn()) //Executes the first function
+            ->to(fn($fn) => $fn()) //Executes the second function
+            ->to(fn($fn) => $fn()) //Executes the third function
+            ->to(fn($name) => ucfirst($name)) //Executes the fourth function
+            ->up(fn($result) => $this->assertSame('Ade', $result)); //manipulates the result
+    }
 }
 
 class StrManipulator {
