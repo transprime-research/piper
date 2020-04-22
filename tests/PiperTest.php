@@ -16,7 +16,7 @@ class PiperTest extends TestCase
     {
         $piper = new Piper();
 
-        $result = $piper->pipe('name')
+        $result = $piper->on('name')
             ->to(fn($name) => strtoupper($name))
             ->up();
 
@@ -63,7 +63,7 @@ class PiperTest extends TestCase
         $this->expectExceptionMessage('pipe() must be called only once');
 
         piper(fn() => 'NAME')
-            ->pipe('1')
+            ->on('1')
             ->to(fn($name) => strtolower($name))
             ->up();
     }

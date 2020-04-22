@@ -15,7 +15,7 @@ class Piper
         return $this->up($action);
     }
 
-    public function pipe($value, callable $callback = null)
+    public function on($value, callable $callback = null)
     {
         if (!empty($this->piped)) {
             throw new PiperException('pipe() must be called only once');

@@ -12,6 +12,6 @@ if (! function_exists('piper')) {
      */
     function piper($value, $callback = null) {
         return (new Piper())
-            ->pipe($value, $callback);
+            ->on($value, $callback);
     }
 }
