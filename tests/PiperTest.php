@@ -133,17 +133,8 @@ class PiperTest extends TestCase
         );
 
         $this->assertSame(
-            [0 => 'ADE'],
-            piper(['name' => 'ade', 'age' => 5])
-                ->to('array_flip')
-                ->to('array_keys')
-                ->to('array_map', fn($val) => strtoupper($val))
-                ->to('array_intersect', [0 => 'ADE'])()
-        );
-
-        $this->assertSame(
             ['ADE'],
-            piper(['ade', 'tobi'])
+            piper(['name' => 'ade', 'hobby' => 'coding'])
                 ->to('array_flip')
                 ->to('array_keys')
                 ->to('array_map', fn($val) => strtoupper($val))
