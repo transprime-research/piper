@@ -52,11 +52,8 @@ use Transprime\Piper\Piper;
 $piper = new Piper();
 $piper->on(['AA'])->to('strtolower')->up();
 
-// Good
-Piper::on(['AA'])->to('strtolower')->up();
-
-//Better
-Piper::on(['AA'])->to('strtolower')();
+// Better
+$piper->on(['AA'])->to('strtolower')();
 
 // Nifty
 piper(['AA'])->to('strtolower')();
@@ -107,7 +104,16 @@ Please see `\Piper\Tests\PiperTest` for more examples.
 
 ## Coming Soon
 
-Backward Piping with `fro()` looking like:
+- Calling piper statically
+```php
+// Good
+Piper::on(['AA'])->to('strtolower')->up();
+
+//Better
+Piper::on(['AA'])->to('strtolower')();
+```
+
+- Backward Pipe with `fro()` looking like:
 
 ```php
 piper('array_intersect', [0 => 'ADE'])

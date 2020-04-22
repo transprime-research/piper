@@ -18,7 +18,7 @@ class Piper
     public function on($value, callable $callback = null)
     {
         if (!empty($this->piped)) {
-            throw new PiperException('pipe() must be called only once');
+            throw new PiperException('on() must be called only once');
         }
 
         if (is_callable($callback)) {
@@ -42,7 +42,7 @@ class Piper
     public function up(callable $action = null)
     {
         if (count($this->piped) < 2) {
-            throw new PiperException('pipe() must be called and to() at least once');
+            throw new PiperException('on() must be called and to() at least once');
         }
 
         $result = $this->piped[0];

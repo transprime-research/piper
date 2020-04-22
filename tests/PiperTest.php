@@ -60,7 +60,7 @@ class PiperTest extends TestCase
     public function testPipeMethodCannotBeCalledMoreThanOnce()
     {
         $this->expectException(PiperException::class);
-        $this->expectExceptionMessage('pipe() must be called only once');
+        $this->expectExceptionMessage('on() must be called only once');
 
         piper(fn() => 'NAME')
             ->on('1')
@@ -71,7 +71,7 @@ class PiperTest extends TestCase
     public function testPipeAndToMethodMustBeCalledBeforeUp()
     {
         $this->expectException(PiperException::class);
-        $this->expectExceptionMessage('pipe() must be called and to() at least once');
+        $this->expectExceptionMessage('on() must be called and to() at least once');
 
         piper(fn() => 'NAME')
             ->up();
