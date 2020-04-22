@@ -1,8 +1,8 @@
 <?php
 
-namespace Piper;
+namespace Transprime\Piper;
 
-use Piper\Exceptions\PiperException;
+use Transprime\Piper\Exceptions\PiperException;
 
 class Piper
 {

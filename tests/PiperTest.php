@@ -3,8 +3,7 @@
 namespace Piper\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Piper\Exceptions\PiperException;
-use Piper\Piper;
+use Transprime\Piper\{Piper, Exceptions\PiperException};
 
 class PiperTest extends TestCase
 {
@@ -88,7 +87,7 @@ class PiperTest extends TestCase
         $this->assertSame('Name', $result);
 
         // test class method
-        $result2 = piper('NAME', StrManipulator::class.'::strToLower')
+        $result2 = piper('NAME', StrManipulator::class . '::strToLower')
             ->to(fn($name) => ucfirst($name))
             ->up();
 
@@ -126,7 +125,7 @@ class PiperTest extends TestCase
         $this->assertSame(
             10,
             piper(['ade', 1])
-                ->to(fn($data) => array_filter($data, static fn($val):bool => is_int($val)))
+                ->to(fn($data) => array_filter($data, static fn($val): bool => is_int($val)))
                 ->to('array_merge', [2, 3, 4])
                 ->to('array_values')
                 ->to('array_sum')
@@ -134,8 +133,17 @@ class PiperTest extends TestCase
         );
 
         $this->assertSame(
+            [0 => 'ADE'],
+            piper(['name' => 'ade', 'age' => 5])
+                ->to('array_flip')
+                ->to('array_keys')
+                ->to('array_map', fn($val) => strtoupper($val))
+                ->to('array_intersect', [0 => 'ADE'])()
+        );
+
+        $this->assertSame(
             ['ADE'],
-            piper(['ade','tobi'])
+            piper(['ade', 'tobi'])
                 ->to('array_flip')
                 ->to('array_keys')
                 ->to('array_map', fn($val) => strtoupper($val))
@@ -152,8 +160,8 @@ class PiperTest extends TestCase
     }
 }
 
-class StrManipulator {
-
+class StrManipulator
+{
     public function __invoke(string $value)
     {
         return $this->strToLower($value);

@@ -6,6 +6,7 @@
     "Piper",
     "pipe",
     "php",
+    "Functional",
     "Helpers",
     "Laravel"
   ],
@@ -28,7 +29,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Piper\\": "src"
+      "Transprime\\Piper\\": "src"
     },
     "files": [
       "Helpers/helpers.php"
@@ -36,7 +37,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Piper\\Tests\\": "tests/"
+      "Transprime\\Piper\\Tests\\": "tests/"
     }
   }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use Piper\Piper;
+use Transprime\Piper\Piper;
 
 if (! function_exists('piper')) {
     /**

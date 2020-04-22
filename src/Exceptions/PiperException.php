@@ -1,6 +1,6 @@
 <?php
 
-namespace Piper\Exceptions;
+namespace Transprime\Piper\Exceptions;
 
 class PiperException extends \Exception
 {
