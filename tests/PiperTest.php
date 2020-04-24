@@ -16,7 +16,7 @@ class PiperTest extends TestCase
     {
         $piper = new Piper();
 
-        $result = $piper->on('name')
+        $result = $piper->pipe('name')
             ->to(fn($name) => strtoupper($name))
             ->up();
 
@@ -63,7 +63,7 @@ class PiperTest extends TestCase
         $this->expectExceptionMessage('on() must be called only once');
 
         piper(fn() => 'NAME')
-            ->on('1')
+            ->pipe('1')
             ->to(fn($name) => strtolower($name))
             ->up();
     }
@@ -148,6 +148,18 @@ class PiperTest extends TestCase
             ->to(fn($name) => ucfirst($name))();
 
         $this->assertSame('Name', $result);
+    }
+
+    public function testPiperOnStaticCreation()
+    {
+        $this->assertEquals(
+            'n,a,m,e',
+            Piper::on('NAME')
+                ->to('str_split')
+                ->to('implode', ',')
+                ->to('strtolower')
+                ->up()
+        );
     }
 }
 

@@ -55,7 +55,7 @@ use Transprime\Piper\Piper;
 
 // Normal
 $piper = new Piper();
-$piper->on(['AA'])->to('strtolower')->up();
+$piper->pipe(['AA'])->to('strtolower')->up();
 
 // Better
 $piper->on(['AA'])->to('strtolower')();
@@ -65,16 +65,19 @@ $piper->on(['AA'])->to('strtolower')();
 `piper()` function is a helper function. It is normally called like so:
 
 ```php
+// Good
+Piper::on('AA')->to('strtolower')->up();
+
+//Better
+Piper::on('AA')->to('strtolower')();
 
 // Nifty
 piper(['AA'])->to('strtolower')();
 ```
 
-Piper `on()` method accepts a callable instance on the second parameter that would be immediately on the first parameter: 
+Piper `piper()` function accepts a callable instance on the second parameter that would be immediately on the first parameter: 
 
-Say we have this class:
-
-Second callable parameter to `on()` method, which 'NAME' shall first be called on:
+Second callable parameter to `piper()` function, which 'NAME' shall first be called on:
 
 ```php
 // test global method
@@ -86,6 +89,7 @@ piper('NAME', 'strtolower') // NAME becomes name
 Also accepts a class with an accessible method name:
 
 Say we have this class:
+
 ```php
 class StrManipulator
 {
@@ -127,15 +131,6 @@ piper('NAME', new StrManipulator()) // A class that implements __invoke
 Please see `\Piper\Tests\PiperTest` for more examples.
 
 ## Coming Soon
-
-- Calling piper statically
-```php
-// Good
-Piper::on(['AA'])->to('strtolower')->up();
-
-//Better
-Piper::on(['AA'])->to('strtolower')();
-```
 
 - Backward Pipe with `fro()` looking like:
 
