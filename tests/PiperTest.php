@@ -161,6 +161,16 @@ class PiperTest extends TestCase
                 ->up()
         );
     }
+
+    public function testStringPassedIntoFirstPipeShouldBeTreatedAsString()
+    {
+        $this->assertEquals(
+            'STRMANIPULATOR::STRTOLOWER',
+            Piper::on('StrManipulator::strToLower')
+                ->to('strtoupper')
+                ->up()
+        );
+    }
 }
 
 class StrManipulator
@@ -170,7 +180,7 @@ class StrManipulator
         return $this->strToLower($value);
     }
 
-    public static function strToLower(string $value)
+    public static function strToLower(string $value = '')
     {
         return strtolower($value);
     }
