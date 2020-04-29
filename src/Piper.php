@@ -52,7 +52,7 @@ class Piper
 
         $result = $this->piped[0];
 
-        if (is_callable($result)) {
+        if (is_callable($result) && !is_string($result)) {
             $result = $result();
         }
 
