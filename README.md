@@ -55,10 +55,10 @@ use Transprime\Piper\Piper;
 
 // Normal
 $piper = new Piper();
-$piper->pipe(['AA'])->to('strtolower')->up();
+$piper->pipe(['AA'])->to('implode')->up();
 
 // Better
-$piper->on(['AA'])->to('strtolower')();
+$piper->on(['AA'])->to('implode')();
 
 ```
 
@@ -72,12 +72,10 @@ Piper::on('AA')->to('strtolower')->up();
 Piper::on('AA')->to('strtolower')();
 
 // Nifty
-piper(['AA'])->to('strtolower')();
+piper('AA')->to('strtolower')();
 ```
 
 Piper `piper()` function accepts a callable instance on the second parameter that would be immediately on the first parameter: 
-
-Second callable parameter to `piper()` function, which 'NAME' shall first be called on:
 
 ```php
 // test global method
@@ -86,9 +84,7 @@ piper('NAME', 'strtolower') // NAME becomes name
     ->up();
 ```
 
-Also accepts a class with an accessible method name:
-
-Say we have this class:
+Also accepts a class with an accessible method name. Say we have this class:
 
 ```php
 class StrManipulator
@@ -128,7 +124,7 @@ piper('NAME', new StrManipulator()) // A class that implements __invoke
     ->up();
 ```
 
-Please see `\Piper\Tests\PiperTest` for more examples.
+Please see `\Transprime\Piper\Tests\PiperTest` for more examples.
 
 ## Coming Soon
 
@@ -146,15 +142,15 @@ piper('array_intersect', [0 => 'ADE'])
 
 ## Additional Information
 
-Be aware that this package is part of a series of Proof of concept so best practices might not be the top priority.
+Be aware that this package is part of a series of "The Proof Of Concept".
 
 See other packages in this series here:
 
 - https://github.com/omitobi/conditional [A smart PHP if...elseif...else statement]
 - https://github.com/transprime-research/attempt [A smart PHP try...catch statement]
-- https://github.com/omitobi/corbonate [A smart Carbon + Collection package]
+- https://github.com/omitobi/carbonate [A smart Carbon + Collection package]
 - https://github.com/omitobi/laravel-habitue [Jsonable Http Request(er) package with Collections response]
-- https://github.com/transprime-research/arrayer [Array now an object]
+- https://github.com/transprime-research/arrayed [A smarter Array now like an object]
 
 ## Similar packages
 
