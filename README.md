@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-<a href="https://travis-ci.com/transprime-research/piper"> <img src="https://travis-ci.com/transprime-research/piper.svg?branch=master" alt="Build Status"/></a>
+<a href="https://travis-ci.com/transprime-research/piper"> <img src="https://travis-ci.org/transprime-research/piper.svg?branch=master" alt="Build Status"/></a>
 <a href="https://packagist.org/packages/transprime-research/piper"> <img src="https://poser.pugx.org/transprime-research/piper/v/stable" alt="Latest Stable Version"/></a>
 <a href="https://packagist.org/packages/transprime-research/piper"> <img src="https://poser.pugx.org/transprime-research/piper/downloads" alt="Total Downloads"/></a>
 <a href="https://packagist.org/packages/transprime-research/piper"> <img src="https://poser.pugx.org/transprime-research/piper/v/unstable" alt="Latest Unstable Version"/></a>
