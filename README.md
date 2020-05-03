@@ -65,6 +65,7 @@ $arr = array_intersect($arr, [0 => 'ADE']);
 
 //$arr is ['ADE']
 ```
+> PS: You can still use the old `function() { return v; }`, `fn()` is the new short arrow function in PHP 7.4+ See: https://www.php.net/manual/en/functions.arrow.php
 
 ## Other Usages
 
