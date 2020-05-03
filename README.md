@@ -19,6 +19,11 @@ PHP Pipe function execution with values from initial call like F#
 
 - `composer require transprime-research/piper`
 
+## Requirement
+Minimum Requirement
+- PHP 7.2 +
+- Composer
+
 ## Quick Usage
 
 Let us take an array and do the following:
