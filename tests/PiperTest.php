@@ -17,7 +17,9 @@ class PiperTest extends TestCase
         $piper = new Piper();
 
         $result = $piper->pipe('name')
-            ->to(fn($name) => strtoupper($name))
+            ->to(function ($name) {
+                return strtoupper($name);
+            })
             ->up();
 
         $this->assertSame('NAME', $result);
@@ -26,33 +28,53 @@ class PiperTest extends TestCase
     public function testClosureCanBeRunOnPipedResult()
     {
         piper('name')
-            ->to(fn($name) => strtoupper($name))
-            ->up(fn($result) => $this->assertSame('NAME', $result));
+            ->to(function ($name) {
+                return strtoupper($name);
+            })
+            ->up(function ($result) {
+                return $this->assertSame('NAME', $result);
+            });
     }
 
     public function testManyPipeTo()
     {
         piper('NAME')
-            ->to(fn($name) => strtolower($name))
-            ->to(fn($name) => ucfirst($name))
-            ->up(fn($result) => $this->assertSame('Name', $result));
+            ->to(function ($name) {
+                return strtolower($name);
+            })
+            ->to(function ($name) {
+                return ucfirst($name);
+            })
+            ->up(function ($result) {
+                return $this->assertSame('Name', $result);
+            });
     }
 
     public function testPipeAPipedResult()
     {
         $result = piper('NAME')
-            ->to(fn($name) => strtolower($name))
-            ->to(fn($name) => ucfirst($name))
-            ->up(fn($result) => \piper($result)->to(fn() => [$result])->up());
+            ->to(function ($name) {
+                return strtolower($name);
+            })
+            ->to(function ($name) {
+                return ucfirst($name);
+            })
+            ->up(function ($result) {
+                return \piper($result)->to(function () use ($result) {
+                    return [$result];
+                })->up();
+            });
 
         $this->assertSame(['Name'], $result);
     }
 
     public function testPiperAcceptsClosure()
     {
-        $result = piper(fn() => 'NAME')
-            ->to(fn($name) => strtolower($name))
-            ->up();
+        $result = piper(function () {
+            return 'NAME';
+        })->to(function ($name) {
+            return strtolower($name);
+        })->up();
 
         $this->assertSame('name', $result);
     }
@@ -62,9 +84,13 @@ class PiperTest extends TestCase
         $this->expectException(PiperException::class);
         $this->expectExceptionMessage('on() must be called only once');
 
-        piper(fn() => 'NAME')
+        piper(function () {
+            return 'NAME';
+        })
             ->pipe('1')
-            ->to(fn($name) => strtolower($name))
+            ->to(function ($name) {
+                return strtolower($name);
+            })
             ->up();
     }
 
@@ -73,49 +99,74 @@ class PiperTest extends TestCase
         $this->expectException(PiperException::class);
         $this->expectExceptionMessage('on() must be called and to() at least once');
 
-        piper(fn() => 'NAME')
-            ->up();
+        piper(function () {
+            return 'NAME';
+        })->up();
     }
 
     public function testPipeMethodAcceptsCallable()
     {
         // test global method
         $result = piper('NAME', 'strtolower')
-            ->to(fn($name) => ucfirst($name))
+            ->to(function ($name) {
+                return ucfirst($name);
+            })
             ->up();
 
         $this->assertSame('Name', $result);
 
         // test class method
         $result2 = piper('NAME', StrManipulator::class . '::strToLower')
-            ->to(fn($name) => ucfirst($name))
+            ->to(function ($name) {
+                return ucfirst($name);
+            })
             ->up();
 
         $this->assertSame('Name', $result2);
 
         // test array class and method
         $result2 = piper('NAME', [StrManipulator::class, 'strToLower'])
-            ->to(fn($name) => ucfirst($name))
-            ->up();
+            ->to(function ($name) {
+                return ucfirst($name);
+            })->up();
 
         $this->assertSame('Name', $result2);
 
         // test class object
         $result2 = piper('NAME', new StrManipulator())
-            ->to(fn($name) => ucfirst($name))
-            ->up();
+            ->to(function ($name) {
+                return ucfirst($name);
+            })->up();
 
         $this->assertSame('Name', $result2);
     }
 
     public function testFunctionCanBeRetrievedAtTheNextPipe()
     {
-        piper(fn() => fn() => fn() => fn() => 'ade')
-            ->to(fn($fn) => $fn()) //Executes the first function
-            ->to(fn($fn) => $fn()) //Executes the second function
-            ->to(fn($fn) => $fn()) //Executes the third function
-            ->to(fn($name) => ucfirst($name)) //Executes the fourth function
-            ->up(fn($result) => $this->assertSame('Ade', $result)); //manipulates the result
+        piper(function () {
+            return function () {
+                return function () {
+                    return function () {
+                        return 'ade';
+                    };
+                };
+            };
+        })
+            ->to(function ($fn) {
+                return $fn();
+            }) //Executes the first function
+            ->to(function ($fn) {
+                return $fn();
+            }) //Executes the second function
+            ->to(function ($fn) {
+                return $fn();
+            }) //Executes the third function
+            ->to(function ($name) {
+                return ucfirst($name);
+            }) //Executes the fourth function
+            ->up(function ($result) {
+                $this->assertSame('Ade', $result);
+            }); //manipulates the result
     }
 
     public function testAcceptingFunctionAndParametersInToMethod()
@@ -125,7 +176,11 @@ class PiperTest extends TestCase
         $this->assertSame(
             10,
             piper(['ade', 1])
-                ->to(fn($data) => array_filter($data, static fn($val): bool => is_int($val)))
+                ->to(function ($data) {
+                    return array_filter($data, static function ($val): bool {
+                        return is_int($val);
+                    });
+                })
                 ->to('array_merge', [2, 3, 4])
                 ->to('array_values')
                 ->to('array_sum')
@@ -137,7 +192,9 @@ class PiperTest extends TestCase
             piper(['name' => 'ade', 'hobby' => 'coding'])
                 ->to('array_flip')
                 ->to('array_keys')
-                ->to('array_map', fn($val) => strtoupper($val))
+                ->to('array_map', function ($val) {
+                    return strtoupper($val);
+                })
                 ->to('array_intersect', [0 => 'ADE'])()
         );
     }
@@ -145,7 +202,9 @@ class PiperTest extends TestCase
     public function testMakePiperInvokableWithoutCallingUpMethod()
     {
         $result = piper('name')
-            ->to(fn($name) => ucfirst($name))();
+            ->to(function ($name) {
+                return ucfirst($name);
+            })();
 
         $this->assertSame('Name', $result);
     }

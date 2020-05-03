@@ -19,6 +19,11 @@ PHP Pipe function execution with values from initial call like F#
 
 - `composer require transprime-research/piper`
 
+## Requirement
+Minimum Requirement
+- PHP 7.2 +
+- Composer
+
 ## Quick Usage
 
 Let us take an array and do the following:
@@ -60,6 +65,7 @@ $arr = array_intersect($arr, [0 => 'ADE']);
 
 //$arr is ['ADE']
 ```
+> PS: You can still use the old `function() { return v; }`, `fn()` is the new short arrow function in PHP 7.4+ See: https://www.php.net/manual/en/functions.arrow.php
 
 ## Other Usages
 

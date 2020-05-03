@@ -6,9 +6,9 @@ use Transprime\Piper\Exceptions\PiperException;
 
 class Piper
 {
-    private array $piped = [];
+    private $piped = [];
 
-    private array $extraParameters = [];
+    private $extraParameters = [];
 
     public function __invoke(callable $action = null)
     {
