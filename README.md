@@ -15,15 +15,6 @@
 PHP Pipe function execution with values from initial call like F#
 > Pipe Like a PRO :ok:
 
-## Installation
-
-- `composer require transprime-research/piper`
-
-## Requirement
-Minimum Requirement
-- PHP 7.2 +
-- Composer
-
 ## Quick Usage
 
 Let us take an array and do the following:
@@ -67,6 +58,15 @@ $arr = array_intersect($arr, [0 => 'ADE']);
 ```
 > PS: You can still use the old `function() { return v; }`, `fn()` is the new short arrow function in PHP 7.4+ See: https://www.php.net/manual/en/functions.arrow.php
 
+## Installation
+
+- `composer require transprime-research/piper`
+
+## Requirement
+Minimum Requirement
+- PHP 7.2 +
+- Composer
+
 ## Other Usages
 
 ```php
@@ -84,14 +84,14 @@ $piper->on(['AA'])->to('implode')();
 `piper()` function is a helper function. It is normally called like so:
 
 ```php
+// Nifty
+piper('AA')->to('strtolower')();
+
 // Good
 Piper::on('AA')->to('strtolower')->up();
 
 //Better
 Piper::on('AA')->to('strtolower')();
-
-// Nifty
-piper('AA')->to('strtolower')();
 ```
 
 Piper `piper()` function accepts a callable instance on the second parameter that would be immediately on the first parameter: 
