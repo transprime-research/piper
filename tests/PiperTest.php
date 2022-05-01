@@ -241,7 +241,7 @@ class PiperTest extends TestCase
                 ->to(array_intersect(...), [0 => 'ADE'])(),
         );
 
-        $this->assertEquals(['H','E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
             piper("Hello World")
                 ->to(htmlentities(...))
                 ->to(str_split(...))
@@ -251,13 +251,36 @@ class PiperTest extends TestCase
 
     public function testPiperWithLn()
     {
-        $this->assertEquals(['H','E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
-        piper("Hello World")
-            ->ln(
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            piper("Hello World")
+                ->ln(
+                    htmlentities(...),
+                    str_split(...),
+                    [array_map(...), fn(string $part) => strtoupper($part)],
+                )
+        );
+    }
+
+    public function testPiperWithDucter()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            ducter(
+                "Hello World",
                 htmlentities(...),
                 str_split(...),
                 [array_map(...), fn(string $part) => strtoupper($part)],
             )
+        );
+    }
+
+    public function testFunctionPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+            (htmlentities(...))
+            (htmlentities(...))
+            (strtoupper(...))
+            (str_split(...))()
         );
     }
 }
