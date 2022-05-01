@@ -11,12 +11,16 @@ class CallablePiper
         $this->piper = $piper->to(fn($vl) => $vl);
     }
 
-    public function __invoke(callable|array $callable = null)
+    /**
+     * @param callable|array|null $callable
+     * @return mixed|self
+     */
+    public function __invoke(callable|array ...$callable): mixed
     {
-        return $callable ? $this->to($callable) : $this->up();
+        return $callable ? $this->to(...$callable) : $this->up();
     }
 
-    public function to(callable $action, ...$extraParameters): static|null|string
+    public function to(callable $action, ...$extraParameters): static
     {
         $this->piper->to($action, ...$extraParameters);
 
@@ -26,5 +30,20 @@ class CallablePiper
     public function up(callable $action = null)
     {
         return $this->piper->up($action);
+    }
+
+    public function p(callable ...$callable)
+    {
+        return $this->__invoke(...$callable);
+    }
+
+    public function _(callable ...$callable)
+    {
+        return $this->__invoke(...$callable);
+    }
+
+    public function fn(callable ...$callable)
+    {
+        return $this->__invoke(...$callable);
     }
 }

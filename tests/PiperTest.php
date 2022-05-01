@@ -273,14 +273,44 @@ class PiperTest extends TestCase
         );
     }
 
-    public function testFunctionPiper()
+    public function testCallablePiper()
     {
         $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
             _p("Hello World")
             (htmlentities(...))
-            (htmlentities(...))
             (strtoupper(...))
             (str_split(...))()
+        );
+    }
+
+    public function testUnderscoredPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+            ->_(htmlentities(...))
+            ->_(str_split(...))
+            ->_(array_map(...), fn(string $part) => strtoupper($part))()
+        );
+    }
+
+    public function testPPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+            ->p(htmlentities(...))
+            ->p(str_split(...))
+            ->p(array_map(...), fn(string $part) => strtoupper($part))()
+        );
+    }
+
+    public function testFnPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+            ->fn(htmlentities(...))
+            ->fn(str_split(...))
+            ->fn(array_map(...), fn(string $part) => strtoupper($part))
+            ->fn()
         );
     }
 }

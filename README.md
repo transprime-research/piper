@@ -77,8 +77,8 @@ _p("Hello World")
 ```php
 _p("Hello World")
     (htmlentities(...))
-    (str_split(...))
-    (array_map(fn(string $part) => strtoupper($part), ...));
+    (strtoupper(...))
+    (str_split(...))()
 ```
 
 ```php
@@ -91,15 +91,23 @@ _p("Hello World")
 ```php
 _p("Hello World")
     ->p(htmlentities(...))
-    ->p(str_split(...))
-    ->p(array_map(fn(string $part) => strtoupper($part), ...));
+    ->p(strtoupper(...))
+    ->p(str_split(...))()
 ```
 
 ```php
 _p("Hello World")
-    ->_p(htmlentities(...))
-    ->_p(str_split(...))
-    ->_p(array_map(fn(string $part) => strtoupper($part), ...));
+    ->_(htmlentities(...))
+    ->_(str_split(...))
+    ->_(array_map(...), fn(string $part) => strtoupper($part))()
+```
+
+```php
+_p("Hello World")
+    ->fn(htmlentities(...))
+    ->fn(str_split(...))
+    ->fn(array_map(...), fn(string $part) => strtoupper($part))
+    ->fn()
 ```
 
 Instead of:
