@@ -32,9 +32,10 @@ piper(['name' => 'ade', 'hobby' => 'coding'])
     ->to('array_intersect', [0 => 'ADE'])(); //returns ['ADE']
 ```
 
-or this in PHP 8.1+
+Or this in PHP 8.1+
+Getting `['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D']` examples:
 
-Use line - as in the line in Pipe"line"
+Use line - as in the line in Pipe-"line"
 ```php
 piper("Hello World")
     ->ln(
@@ -59,7 +60,7 @@ Call functions like an array:
 _p("Hello World")
     [htmlentities(...)]
     [str_split(...)]
-    [[array_map(...), fn(string $part) => strtoupper($part)]]()
+    [[array_map(...), strtoupper(...)]]()
 ```
 
 How about Closure() on Closure
@@ -67,7 +68,8 @@ How about Closure() on Closure
 _p("Hello World")
     (htmlentities(...))
     (strtoupper(...))
-    (str_split(...))()
+    (str_split(...))
+    (array_map(...), strtoupper(...))()
 ```
 
 Cleaner with underscore `_`
@@ -75,15 +77,15 @@ Cleaner with underscore `_`
 _p("Hello World")
     ->_(htmlentities(...))
     ->_(str_split(...))
-    ->_(array_map(fn(string $part) => strtoupper($part), ...));
+    ->_(array_map(...), strtoupper(...)));
 ```
 
 Shortcut to `pipe()` is `p()`
 ```php
 _p("Hello World")
     ->p(htmlentities(...))
-    ->p(strtoupper(...))
-    ->p(str_split(...))()
+    ->p(str_split(...))
+    ->p(array_map(...), strtoupper(...))()
 ```
 
 PHP 7.4 `fn()` like
@@ -91,7 +93,7 @@ PHP 7.4 `fn()` like
 _p("Hello World")
     ->fn(htmlentities(...))
     ->fn(str_split(...))
-    ->fn(array_map(...), fn(string $part) => strtoupper($part))
+    ->fn(array_map(...), strtoupper())
     ->fn()
 ```
 
@@ -100,7 +102,7 @@ Proxied call to globally available functions
 _p("Hello World")
     ->htmlentities()
     ->str_split()
-    ->array_map(fn(string $part) => strtoupper($part))()
+    ->array_map(strtoupper(...))()
 ```
 
 Instead of:
