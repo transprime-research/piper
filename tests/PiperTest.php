@@ -230,6 +230,36 @@ class PiperTest extends TestCase
                 ->up()
         );
     }
+
+    public function testPiperWithPHP81FirstClassCallable()
+    {
+        $this->assertEquals(['ADE'],
+            piper(['name' => 'ade', 'hobby' => 'coding'])
+                ->to(array_flip(...))
+                ->to(array_keys(...))
+                ->to(array_map(...), fn($val) => strtoupper($val))
+                ->to(array_intersect(...), [0 => 'ADE'])(),
+        );
+
+        $this->assertEquals(['H','E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            piper("Hello World")
+                ->to(htmlentities(...))
+                ->to(str_split(...))
+                ->to(array_map(...), fn(string $part) => strtoupper($part))()
+        );
+    }
+
+    public function testPiperWithLn()
+    {
+        $this->assertEquals(['H','E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+        piper("Hello World")
+            ->ln(
+                htmlentities(...),
+                str_split(...),
+                [array_map(...), fn(string $part) => strtoupper($part)],
+            )
+        );
+    }
 }
 
 class StrManipulator

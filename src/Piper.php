@@ -6,6 +6,8 @@ use Transprime\Piper\Exceptions\PiperException;
 
 class Piper
 {
+    use On;
+
     private $piped = [];
 
     private $extraParameters = [];

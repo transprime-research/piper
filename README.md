@@ -21,7 +21,7 @@ Let us take an array and do the following:
 
 - flip the array to make the keys become the values and vice versa
 - get the new keys
-- change (the keys now) values to to upper case
+- change (the keys now) values to upper case
 - take the exact item with `[0 => 'ADE']`
  
 ```php
@@ -30,6 +30,76 @@ piper(['name' => 'ade', 'hobby' => 'coding'])
     ->to('array_keys')
     ->to('array_map', fn($val) => strtoupper($val))
     ->to('array_intersect', [0 => 'ADE'])(); //returns ['ADE']
+```
+
+or this in PHP 8.1+
+
+```php
+piper(['name' => 'ade', 'hobby' => 'coding'])
+    ->to(array_flip(...))
+    ->to(array_keys(...))
+    ->to(array_map(...), fn($val) => strtoupper($val))
+    ->to(array_intersect(...), [0 => 'ADE'])(); //returns ['ADE']
+```
+
+```php
+piper("Hello World")
+    ->to(htmlentities(...))
+    ->to(str_split(...))
+    ->to(array_map(fn(string $part) => strtoupper($part), ...))
+```
+
+```php
+piper("Hello World")
+    ->on(
+    htmlentities(...),
+    str_split(...),
+    array_map(fn(string $part) => strtoupper($part), ...)
+);
+```
+
+```php
+piper(
+    "Hello World",
+    htmlentities(...),
+    str_split(...),
+    array_map(fn(string $part) => strtoupper($part), ...)
+);
+```
+
+```php
+_p("Hello World")
+    [htmlentities(...)]
+    [str_split(...)]
+    [array_map(fn(string $part) => strtoupper($part), ...)];
+```
+
+```php
+_p("Hello World")
+    (htmlentities(...))
+    (str_split(...))
+    (array_map(fn(string $part) => strtoupper($part), ...));
+```
+
+```php
+_p("Hello World")
+    ->_(htmlentities(...))
+    ->_(str_split(...))
+    ->_(array_map(fn(string $part) => strtoupper($part), ...));
+```
+
+```php
+_p("Hello World")
+    ->p(htmlentities(...))
+    ->p(str_split(...))
+    ->p(array_map(fn(string $part) => strtoupper($part), ...));
+```
+
+```php
+_p("Hello World")
+    ->_p(htmlentities(...))
+    ->_p(str_split(...))
+    ->_p(array_map(fn(string $part) => strtoupper($part), ...));
 ```
 
 Instead of:
