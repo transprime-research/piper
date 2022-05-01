@@ -4,7 +4,12 @@ namespace Transprime\Piper;
 
 trait On
 {
-    public function ln(callable|array ...$functions)
+    /**
+     * @param callable|array ...$functions
+     * @return mixed|string
+     * @throws Exceptions\PiperException
+     */
+    public function ln(...$functions)
     {
         foreach ($functions as $function) {
             $callables = is_array($function) ? $function : [$function];

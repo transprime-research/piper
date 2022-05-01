@@ -15,7 +15,7 @@ class CallablePiper implements \ArrayAccess
      * @param callable|array|null $callable
      * @return mixed|self
      */
-    public function __invoke(callable|array ...$callable): mixed
+    public function __invoke(...$callable): mixed
     {
         return $callable ? $this->to(...$callable) : $this->up();
     }

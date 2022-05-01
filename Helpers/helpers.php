@@ -16,7 +16,13 @@ if (! function_exists('piper')) {
             ->pipe($value, $callback);
     }
 
-    function ducter($value, callable|array ...$lines) {
+    /**
+     * @param $value
+     * @param callable|array ...$lines
+     * @return mixed|string
+     * @throws \Transprime\Piper\Exceptions\PiperException
+     */
+    function ducter($value, ...$lines) {
         $piper = \piper($value);
 
         return $piper->ln(...$lines);
