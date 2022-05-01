@@ -231,6 +231,11 @@ class PiperTest extends TestCase
         );
     }
 
+    private function runIfOnPHP81()
+    {
+        return (float)phpversion() >= 8.1;
+    }
+
     public function testPiperWithPHP81FirstClassCallable()
     {
         $this->assertEquals(['ADE'],
@@ -256,7 +261,7 @@ class PiperTest extends TestCase
                 ->ln(
                     htmlentities(...),
                     str_split(...),
-                    [array_map(...), fn(string $part) => strtoupper($part)],
+                    [array_map(...), strtoupper(...)],
                 )
         );
     }
@@ -268,7 +273,7 @@ class PiperTest extends TestCase
                 "Hello World",
                 htmlentities(...),
                 str_split(...),
-                [array_map(...), fn(string $part) => strtoupper($part)],
+                [array_map(...), strtoupper(...)],
             )
         );
     }
@@ -278,8 +283,8 @@ class PiperTest extends TestCase
         $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
             _p("Hello World")
             (htmlentities(...))
-            (strtoupper(...))
-            (str_split(...))()
+            (str_split(...))
+            (array_map(...), strtoupper(...))()
         );
     }
 
@@ -289,7 +294,7 @@ class PiperTest extends TestCase
             _p("Hello World")
                 ->_(htmlentities(...))
                 ->_(str_split(...))
-                ->_(array_map(...), fn(string $part) => strtoupper($part))()
+                ->_(array_map(...), strtoupper(...))()
         );
     }
 
@@ -299,7 +304,7 @@ class PiperTest extends TestCase
             _p("Hello World")
                 ->p(htmlentities(...))
                 ->p(str_split(...))
-                ->p(array_map(...), fn(string $part) => strtoupper($part))()
+                ->p(array_map(...), strtoupper(...))()
         );
     }
 
@@ -309,7 +314,7 @@ class PiperTest extends TestCase
             _p("Hello World")
                 ->fn(htmlentities(...))
                 ->fn(str_split(...))
-                ->fn(array_map(...), fn(string $part) => strtoupper($part))
+                ->fn(array_map(...), strtoupper(...))
                 ->fn()
         );
     }
@@ -320,7 +325,7 @@ class PiperTest extends TestCase
             _p("Hello World")
                 [htmlentities(...)]
                 [str_split(...)]
-                [[array_map(...), fn(string $part) => strtoupper($part)]]()
+                [[array_map(...), strtoupper(...)]]()
         );
     }
 
@@ -330,7 +335,7 @@ class PiperTest extends TestCase
             _p("Hello World")
                 ->htmlentities()
                 ->str_split()
-                ->array_map(fn(string $part) => strtoupper($part))()
+                ->array_map(strtoupper(...))()
         );
     }
 }
