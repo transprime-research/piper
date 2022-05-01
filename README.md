@@ -34,14 +34,7 @@ piper(['name' => 'ade', 'hobby' => 'coding'])
 
 or this in PHP 8.1+
 
-```php
-piper(['name' => 'ade', 'hobby' => 'coding'])
-    ->to(array_flip(...))
-    ->to(array_keys(...))
-    ->to(array_map(...), fn($val) => strtoupper($val))
-    ->to(array_intersect(...), [0 => 'ADE'])(); //returns ['ADE']
-```
-
+Use line - as in the line in Pipe"line"
 ```php
 piper("Hello World")
     ->ln(
@@ -51,6 +44,7 @@ piper("Hello World")
     );
 ```
 
+Think about ductape on a pipe. Ducter allows such neat calls to your functions
 ```php
 ducter(
     "Hello World",
@@ -60,6 +54,7 @@ ducter(
 )
 ```
 
+Call functions like an array:
 ```php
 _p("Hello World")
     [htmlentities(...)]
@@ -67,6 +62,7 @@ _p("Hello World")
     [[array_map(...), fn(string $part) => strtoupper($part)]]()
 ```
 
+How about Closure() on Closure
 ```php
 _p("Hello World")
     (htmlentities(...))
@@ -74,6 +70,7 @@ _p("Hello World")
     (str_split(...))()
 ```
 
+Cleaner with underscore `_`
 ```php
 _p("Hello World")
     ->_(htmlentities(...))
@@ -81,6 +78,7 @@ _p("Hello World")
     ->_(array_map(fn(string $part) => strtoupper($part), ...));
 ```
 
+Shortcut to `pipe()` is `p()`
 ```php
 _p("Hello World")
     ->p(htmlentities(...))
@@ -88,13 +86,7 @@ _p("Hello World")
     ->p(str_split(...))()
 ```
 
-```php
-_p("Hello World")
-    ->_(htmlentities(...))
-    ->_(str_split(...))
-    ->_(array_map(...), fn(string $part) => strtoupper($part))()
-```
-
+PHP 7.4 `fn()` like
 ```php
 _p("Hello World")
     ->fn(htmlentities(...))
@@ -103,6 +95,7 @@ _p("Hello World")
     ->fn()
 ```
 
+Proxied call to globally available functions
 ```php
 _p("Hello World")
     ->htmlentities()
@@ -238,9 +231,6 @@ piper('array_intersect', [0 => 'ADE'])
 > Api implementation to be decided
 
 ## Additional Information
-
-Be aware that this package is part of a series of "The Proof Of Concept".
-
 See other packages in this series here:
 
 - https://github.com/omitobi/conditional [A smart PHP if...elseif...else statement]
