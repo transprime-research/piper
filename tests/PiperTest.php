@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Piper\Tests;
 
@@ -287,9 +287,9 @@ class PiperTest extends TestCase
     {
         $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
             _p("Hello World")
-            ->_(htmlentities(...))
-            ->_(str_split(...))
-            ->_(array_map(...), fn(string $part) => strtoupper($part))()
+                ->_(htmlentities(...))
+                ->_(str_split(...))
+                ->_(array_map(...), fn(string $part) => strtoupper($part))()
         );
     }
 
@@ -297,9 +297,9 @@ class PiperTest extends TestCase
     {
         $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
             _p("Hello World")
-            ->p(htmlentities(...))
-            ->p(str_split(...))
-            ->p(array_map(...), fn(string $part) => strtoupper($part))()
+                ->p(htmlentities(...))
+                ->p(str_split(...))
+                ->p(array_map(...), fn(string $part) => strtoupper($part))()
         );
     }
 
@@ -307,10 +307,30 @@ class PiperTest extends TestCase
     {
         $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
             _p("Hello World")
-            ->fn(htmlentities(...))
-            ->fn(str_split(...))
-            ->fn(array_map(...), fn(string $part) => strtoupper($part))
-            ->fn()
+                ->fn(htmlentities(...))
+                ->fn(str_split(...))
+                ->fn(array_map(...), fn(string $part) => strtoupper($part))
+                ->fn()
+        );
+    }
+
+    public function testIndexPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+                [htmlentities(...)]
+                [str_split(...)]
+                [[array_map(...), fn(string $part) => strtoupper($part)]]()
+        );
+    }
+
+    public function testProxiedPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+                ->htmlentities()
+                ->str_split()
+                ->array_map(fn(string $part) => strtoupper($part))()
         );
     }
 }

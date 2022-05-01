@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Transprime\Piper;
 
-class CallablePiper
+class CallablePiper implements \ArrayAccess
 {
     private Piper $piper;
 
@@ -45,5 +45,31 @@ class CallablePiper
     public function fn(callable ...$callable)
     {
         return $this->__invoke(...$callable);
+    }
+
+    public function offsetExists(mixed $offset): bool
+    {
+        return true;
+    }
+
+    public function offsetGet(mixed ...$offset): mixed
+    {
+        if (is_array($offset[0])) {
+           return $this->__invoke(...$offset[0]);
+        }
+
+        return $this->__invoke(...$offset);
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void {}
+
+    public function offsetUnset(mixed $offset): void {}
+
+    /**
+     * @return mixed|self
+     */
+    public function __call(string $name, array $arguments)
+    {
+        return $this->__invoke($name, ...$arguments);
     }
 }

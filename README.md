@@ -44,34 +44,27 @@ piper(['name' => 'ade', 'hobby' => 'coding'])
 
 ```php
 piper("Hello World")
-    ->to(htmlentities(...))
-    ->to(str_split(...))
-    ->to(array_map(fn(string $part) => strtoupper($part), ...))
+    ->ln(
+        htmlentities(...),
+        str_split(...),
+        [array_map(...), fn(string $part) => strtoupper($part)],
+    );
 ```
 
 ```php
-piper("Hello World")
-    ->on(
-    htmlentities(...),
-    str_split(...),
-    array_map(fn(string $part) => strtoupper($part), ...)
-);
-```
-
-```php
-piper(
+ducter(
     "Hello World",
     htmlentities(...),
     str_split(...),
-    array_map(fn(string $part) => strtoupper($part), ...)
-);
+    [array_map(...), fn(string $part) => strtoupper($part)],
+)
 ```
 
 ```php
 _p("Hello World")
     [htmlentities(...)]
     [str_split(...)]
-    [array_map(fn(string $part) => strtoupper($part), ...)];
+    [[array_map(...), fn(string $part) => strtoupper($part)]]()
 ```
 
 ```php
@@ -108,6 +101,13 @@ _p("Hello World")
     ->fn(str_split(...))
     ->fn(array_map(...), fn(string $part) => strtoupper($part))
     ->fn()
+```
+
+```php
+_p("Hello World")
+    ->htmlentities()
+    ->str_split()
+    ->array_map(fn(string $part) => strtoupper($part))()
 ```
 
 Instead of:
