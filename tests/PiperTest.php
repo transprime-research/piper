@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Piper\Tests;
 
@@ -228,6 +228,114 @@ class PiperTest extends TestCase
             Piper::on('StrManipulator::strToLower')
                 ->to('strtoupper')
                 ->up()
+        );
+    }
+
+    private function runIfOnPHP81()
+    {
+        return (float)phpversion() >= 8.1;
+    }
+
+    public function testPiperWithPHP81FirstClassCallable()
+    {
+        $this->assertEquals(['ADE'],
+            piper(['name' => 'ade', 'hobby' => 'coding'])
+                ->to(array_flip(...))
+                ->to(array_keys(...))
+                ->to(array_map(...), fn($val) => strtoupper($val))
+                ->to(array_intersect(...), [0 => 'ADE'])(),
+        );
+
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            piper("Hello World")
+                ->to(htmlentities(...))
+                ->to(str_split(...))
+                ->to(array_map(...), fn(string $part) => strtoupper($part))()
+        );
+    }
+
+    public function testPiperWithLn()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            piper("Hello World")
+                ->ln(
+                    htmlentities(...),
+                    str_split(...),
+                    [array_map(...), strtoupper(...)],
+                )
+        );
+    }
+
+    public function testPiperWithDucter()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            ducter(
+                "Hello World",
+                htmlentities(...),
+                str_split(...),
+                [array_map(...), strtoupper(...)],
+            )
+        );
+    }
+
+    public function testCallablePiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+            (htmlentities(...))
+            (str_split(...))
+            (array_map(...), strtoupper(...))()
+        );
+    }
+
+    public function testUnderscoredPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+                ->_(htmlentities(...))
+                ->_(str_split(...))
+                ->_(array_map(...), strtoupper(...))()
+        );
+    }
+
+    public function testPPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+                ->p(htmlentities(...))
+                ->p(str_split(...))
+                ->p(array_map(...), strtoupper(...))()
+        );
+    }
+
+    public function testFnPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+                ->fn(htmlentities(...))
+                ->fn(str_split(...))
+                ->fn(array_map(...), strtoupper(...))
+                ->fn()
+        );
+    }
+
+    public function testIndexPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+                [htmlentities(...)]
+                [str_split(...)]
+                [[array_map(...), strtoupper(...)]]()
+        );
+    }
+
+    public function testProxiedPiper()
+    {
+        $this->assertEquals(['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'],
+            _p("Hello World")
+                ->htmlentities()
+                ->str_split()
+                ->array_map(strtoupper(...))()
         );
     }
 }

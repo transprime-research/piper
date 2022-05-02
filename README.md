@@ -21,7 +21,7 @@ Let us take an array and do the following:
 
 - flip the array to make the keys become the values and vice versa
 - get the new keys
-- change (the keys now) values to to upper case
+- change (the keys now) values to upper case
 - take the exact item with `[0 => 'ADE']`
  
 ```php
@@ -30,6 +30,79 @@ piper(['name' => 'ade', 'hobby' => 'coding'])
     ->to('array_keys')
     ->to('array_map', fn($val) => strtoupper($val))
     ->to('array_intersect', [0 => 'ADE'])(); //returns ['ADE']
+```
+
+Or this in PHP 8.1+
+Getting `['H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D']` examples:
+
+Use line - as in the line in Pipe-"line"
+```php
+piper("Hello World")
+    ->ln(
+        htmlentities(...),
+        str_split(...),
+        [array_map(...), fn(string $part) => strtoupper($part)],
+    );
+```
+
+Think about ductape on a pipe. Ducter allows such neat calls to your functions
+```php
+ducter(
+    "Hello World",
+    htmlentities(...),
+    str_split(...),
+    [array_map(...), fn(string $part) => strtoupper($part)],
+)
+```
+
+Call functions like an array:
+```php
+_p("Hello World")
+    [htmlentities(...)]
+    [str_split(...)]
+    [[array_map(...), strtoupper(...)]]()
+```
+
+How about Closure() on Closure
+```php
+_p("Hello World")
+    (htmlentities(...))
+    (strtoupper(...))
+    (str_split(...))
+    (array_map(...), strtoupper(...))()
+```
+
+Cleaner with underscore `_`
+```php
+_p("Hello World")
+    ->_(htmlentities(...))
+    ->_(str_split(...))
+    ->_(array_map(...), strtoupper(...)));
+```
+
+Shortcut to `pipe()` is `p()`
+```php
+_p("Hello World")
+    ->p(htmlentities(...))
+    ->p(str_split(...))
+    ->p(array_map(...), strtoupper(...))()
+```
+
+PHP 7.4 `fn()` like
+```php
+_p("Hello World")
+    ->fn(htmlentities(...))
+    ->fn(str_split(...))
+    ->fn(array_map(...), strtoupper())
+    ->fn()
+```
+
+Proxied call to globally available functions
+```php
+_p("Hello World")
+    ->htmlentities()
+    ->str_split()
+    ->array_map(strtoupper(...))()
 ```
 
 Instead of:
@@ -160,9 +233,6 @@ piper('array_intersect', [0 => 'ADE'])
 > Api implementation to be decided
 
 ## Additional Information
-
-Be aware that this package is part of a series of "The Proof Of Concept".
-
 See other packages in this series here:
 
 - https://github.com/omitobi/conditional [A smart PHP if...elseif...else statement]
