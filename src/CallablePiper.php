@@ -4,20 +4,13 @@ namespace Transprime\Piper;
 
 class CallablePiper implements \ArrayAccess
 {
+    use Link;
+
     private Piper $piper;
 
     public function __construct(Piper $piper)
     {
         $this->piper = $piper->to(fn($vl) => $vl);
-    }
-
-    /**
-     * @param callable|array|null $callable
-     * @return mixed|self
-     */
-    public function __invoke(...$callable): mixed
-    {
-        return $callable ? $this->to(...$callable) : $this->up();
     }
 
     public function to(callable $action, ...$extraParameters): static
@@ -64,12 +57,4 @@ class CallablePiper implements \ArrayAccess
     public function offsetSet(mixed $offset, mixed $value): void {}
 
     public function offsetUnset(mixed $offset): void {}
-
-    /**
-     * @return mixed|self
-     */
-    public function __call(string $name, array $arguments)
-    {
-        return $this->__invoke($name, ...$arguments);
-    }
 }

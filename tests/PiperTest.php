@@ -338,6 +338,18 @@ class PiperTest extends TestCase
                 ->array_map(strtoupper(...))()
         );
     }
+
+    public function testProxiedPiperCall()
+    {
+        $this->assertEquals(['D', 'L', 'R', 'O', 'W', ' ', 'O', 'L', 'L', 'E', 'H'],
+            _p("HELLO WORLD")
+                ->htmlentities()
+                ->str_split()
+                ->array_reverse()
+                ->array_values()
+                ->up()
+        );
+    }
 }
 
 class StrManipulator
