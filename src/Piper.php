@@ -7,6 +7,7 @@ use Transprime\Piper\Exceptions\PiperException;
 class Piper
 {
     use On;
+    use Link;
 
     private $piped = [];
 
