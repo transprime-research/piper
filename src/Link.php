@@ -1,6 +1,8 @@
 <?php
 
- namespace Transprime\Piper;
+declare(strict_types=1);
+
+namespace Transprime\Piper;
 
 /**
  * Add Methods doc blocks here if needed

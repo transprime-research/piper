@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Transprime\Piper;
 
 use Transprime\Piper\Exceptions\PiperException;
