@@ -36,4 +36,4 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run tests
-       run: vendor/bin/phpunit
+      run: vendor/bin/phpunit
